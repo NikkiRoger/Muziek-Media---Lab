@@ -2,17 +2,36 @@
 <html lang="nl">
 <head>
 <meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
-<meta name="description" content="Muziek & Media Lab — kies een route, ontdek en maak.">
+<meta name="description" content="Muziek & Media Lab — kies een creatieve route, ontdek en maak.">
 <title>Muziek & Media Lab</title><link rel="stylesheet" href="styles.css">
 </head>
 <body>
 <header class="top"><div class="wrap nav"><a class="brand" href="index.html">MUZIEK & MEDIA <span>LAB</span></a><span class="ov">OV+</span></div></header>
-<main class="wrap">
-<section class="hero"><p class="kicker">KIES · ONTDEK · MAAK</p><h1>Waar wil jij vandaag<br>in duiken?</h1><p class="lead">Je hoeft niet alles te kunnen. Kies een route die bij je past en start met een missie.</p></section>
-<section aria-labelledby="routes-title"><h2 id="routes-title">Kies een route</h2><div class="routes">
-<button class="route active" data-filter="all">Alles</button><button class="route" data-filter="explorer">🎧 Explorer</button><button class="route" data-filter="musician">🎹 Musician</button><button class="route" data-filter="producer">🎛️ Producer</button><button class="route" data-filter="designer">✦ Designer</button><button class="route" data-filter="media">🎬 Media Maker</button><button class="route" data-filter="coder">⌨ Coder</button>
+<main>
+<section class="homehero"><div class="wrap hero-inner">
+<p class="kicker">OV+ · MUZIEK & MEDIA</p>
+<h1>MUZIEK<br><span>& MEDIA LAB</span></h1>
+<p class="hero-question">Wat wil jij vandaag maken?</p>
+<p class="lead">Kies een wereld. Probeer iets uit. Je hoeft nog niet te weten waar je goed in bent.</p>
+<a class="discover" href="#werelden">Ontdek de werelden ↓</a>
 </div></section>
-<section class="missions" aria-labelledby="missions-title"><div class="sectionhead"><div><p class="kicker">MISSIES</p><h2 id="missions-title">Kies iets om te proberen</h2></div><p>Je mag later altijd van route wisselen.</p></div>
+
+<section id="werelden" class="world-section"><div class="wrap">
+<div class="sectionhead world-head"><div><p class="kicker">6 WERELDEN</p><h2>Kies waar je zin in hebt</h2></div><p>Vandaag kiezen is niet voor altijd kiezen.</p></div>
+<div class="world-grid">
+<button class="world explorer" data-filter="explorer"><span class="world-icon">🎧</span><span class="world-name">Explorer</span><span class="world-copy">Luister. Onderzoek. Probeer iets nieuws.</span><span class="world-keywords">songs · tools · experiment</span><span class="world-go">Ontdek missies →</span></button>
+<button class="world musician" data-filter="musician"><span class="world-icon">🎹</span><span class="world-name">Musician</span><span class="world-copy">Speel. Arrangeer. Maak het van jou.</span><span class="world-keywords">instrument · melodie · arrangement</span><span class="world-go">Ontdek missies →</span></button>
+<button class="world producer" data-filter="producer"><span class="world-icon">🎛️</span><span class="world-name">Producer</span><span class="world-copy">Bouw muziek met geluid.</span><span class="world-keywords">beats · samples · recording · mix</span><span class="world-go">Ontdek missies →</span></button>
+<button class="world designer" data-filter="designer"><span class="world-icon">✦</span><span class="world-name">Designer</span><span class="world-copy">Geef ideeën een eigen look.</span><span class="world-keywords">covers · logo · poster · branding</span><span class="world-go">Ontdek missies →</span></button>
+<button class="world media" data-filter="media"><span class="world-icon">🎬</span><span class="world-name">Media Maker</span><span class="world-copy">Vertel iets met beeld en montage.</span><span class="world-keywords">foto · video · montage · verhaal</span><span class="world-go">Ontdek missies →</span></button>
+<button class="world coder" data-filter="coder"><span class="world-icon">⌨</span><span class="world-name">Coder</span><span class="world-copy">Maak iets dat digitaal werkt.</span><span class="world-keywords">HTML · CSS · JavaScript · interactie</span><span class="world-go">Ontdek missies →</span></button>
+</div>
+<div class="surprise-box"><div><p class="kicker">GEEN IDEE?</p><h3>Laat het Lab kiezen.</h3><p>Je krijgt willekeurig één bestaande missie. Bevalt ze niet? Dan probeer je opnieuw.</p></div><button id="surprise" class="surprise">↝ Verras mij</button></div>
+</div></section>
+
+<section id="missies" class="missions home-missions"><div class="wrap">
+<div class="mission-toolbar"><div><p class="kicker">MISSIES</p><h2 id="mission-title">Alle missies</h2></div><button id="show-all" class="small-button hidden">← Toon alle werelden</button></div>
+<p id="mission-intro" class="mission-intro">Je kunt ook meteen een opdracht kiezen.</p>
 <div class="grid">
 <article class="card" data-track="explorer"><div class="tag">EXPLORER · EXPLORE</div><h3>Waarom werkt dit nummer?</h3><p>Ontdek welke muzikale keuzes ervoor zorgen dat jij blijft luisteren.</p><div class="bottom"><span>20–30 min</span><a href="opdrachten/waarom-werkt-dit-nummer.html">Start missie →</a></div></article>
 <article class="card" data-track="musician"><div class="tag">MUSICIAN · CREATE</div><h3>Instrument Remix</h3><p>Geef een bestaand nummer een compleet ander karakter.</p><div class="bottom"><span>30–60 min</span><a href="opdrachten/instrument-remix.html">Start missie →</a></div></article>
@@ -20,8 +39,7 @@
 <article class="card" data-track="designer"><div class="tag">DESIGNER · CREATE</div><h3>Albumcover Redesign</h3><p>Geef een bestaande release een volledig nieuwe visuele identiteit.</p><div class="bottom"><span>30–45 min</span><a href="opdrachten/albumcover-redesign.html">Start missie →</a></div></article>
 <article class="card" data-track="coder"><div class="tag">CODER · DEEP DIVE</div><h3>Artist Page</h3><p>Bouw met HTML en CSS een kleine website voor een fictieve artiest.</p><div class="bottom"><span>45–90 min</span><a href="opdrachten/artist-page.html">Start missie →</a></div></article>
 <article class="card soon" data-track="media"><div class="tag">MEDIA MAKER</div><h3>Nieuwe missie onderweg</h3><p>Hier verschijnt binnenkort een zelfstandige foto- of videomissie.</p><div class="bottom"><span>Binnenkort</span></div></article>
-</div></section>
-<section class="choice"><p class="kicker">VASTGELOPEN?</p><h2>Geen idee wat je moet kiezen?</h2><p>Begin bij <strong>Explorer</strong>. Daar hoef je nog niets te kunnen: je onderzoekt eerst wat jou nieuwsgierig maakt.</p></section>
+</div></div></section>
 </main>
 <footer><div class="wrap foot"><strong>Muziek & Media Lab</strong><span>OV+ · Egmont & Hoorn</span></div></footer>
 <script src="app.js"></script></body></html>
