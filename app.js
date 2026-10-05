@@ -1,0 +1,1 @@
+const buttons=document.querySelectorAll(".route");const cards=document.querySelectorAll(".card");buttons.forEach(button=>{button.addEventListener("click",()=>{buttons.forEach(b=>b.classList.remove("active"));button.classList.add("active");const filter=button.dataset.filter;cards.forEach(card=>card.classList.toggle("hidden",filter!=="all"&&card.dataset.track!==filter));});});
