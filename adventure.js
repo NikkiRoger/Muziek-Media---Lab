@@ -12,7 +12,7 @@ const worlds=[
 const NS="http://www.w3.org/2000/svg";const svg=document.createElementNS(NS,"svg");svg.setAttribute("viewBox","0 0 1000 600");svg.setAttribute("preserveAspectRatio","none");svg.setAttribute("aria-hidden","true");svg.classList.add("pixel-map-art");
 function rect(x,y,w,h,fill){const e=document.createElementNS(NS,"rect");for(const [k,v] of Object.entries({x,y,width:w,height:h,fill}))e.setAttribute(k,v);svg.appendChild(e)}
 // Pixel ocean with six distinct islands, reefs, boats and wave tiles.
-rect(0,0,1000,600,"#70B9C9");
+rect(0,0,1000,600,"#347F9C");\nrect(14,14,972,572,"#56A8BD");\nrect(35,35,930,530,"#65B9C8");
 for(let y=0;y<600;y+=24)for(let x=0;x<1000;x+=32){
  if((x/32*3+y/24*5)%9===0){rect(x+7,y+9,15,4,"#A6D9D7");rect(x+2,y+13,8,3,"#91CED1");}
  if((x/32+y/24*2)%31===0)rect(x+21,y+3,5,5,"#D0E8D9");
@@ -41,6 +41,15 @@ for(const [a,b] of [[0,1],[1,2],[0,3],[1,4],[2,5],[3,4],[4,5]]){
 // Little sailing boat and a treasure marker
 rect(344,317,40,9,"#466C79");rect(351,309,27,9,"#E9D5AB");rect(365,277,4,33,"#375B69");rect(369,281,20,23,"#FFF4D9");
 rect(700,364,18,13,"#D6A44D");rect(705,358,8,7,"#F4D889");rect(704,368,10,4,"#9A743E");
+
+// Atmospheric map details: ocean depth, foam, rocks, lighthouse, clouds and landmarks.
+function pixelCloud(x,y){rect(x+12,y,68,15,"#E9F8F0");rect(x+24,y-12,40,13,"#F8FFF6");rect(x,y+10,95,9,"#D3EDE6");}
+function reef(x,y){rect(x-17,y+7,43,10,"#4C9EA7");rect(x-9,y,24,11,"#A3C8B3");rect(x+6,y-7,11,9,"#D9D4A4");}
+for(const [x,y] of [[245,82],[651,63],[933,121],[328,516],[726,545]])pixelCloud(x,y);
+for(const [x,y] of [[297,190],[684,235],[410,411],[930,433],[79,518],[603,352]])reef(x,y);
+rect(602,451,16,45,"#F8E9C8");rect(598,446,24,11,"#D96F68");rect(605,436,10,13,"#FFF4A3");rect(594,499,34,9,"#8C8872");
+rect(916,307,44,10,"#487A8C");rect(923,293,30,15,"#E5BD82");rect(934,273,6,20,"#FFF2D9");rect(939,282,19,10,"#F9F2CF");
+rect(23,365,38,8,"#4A8992");rect(32,358,20,9,"#FFF5DB");
 root.appendChild(svg);
 const layer=document.createElement("div");layer.className="pixel-world-layer";root.appendChild(layer);
 // Free sailing: no timer, no score for speed, no moving hazards.
