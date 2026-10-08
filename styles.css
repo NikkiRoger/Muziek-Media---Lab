@@ -105,3 +105,14 @@ body.world-selected .sd-panel{border-left:4px solid var(--petrol)}
 .login-mode-button{font:inherit;font-weight:800;font-size:.86rem;line-height:1.25;min-height:50px;background:#E9EFE7;color:#293E3B;border:2px solid #293E3B;border-radius:2px;padding:9px 7px;cursor:pointer}
 .login-mode-button.active{background:#4F7C7A;color:#fff;box-shadow:3px 3px 0 #9AB6A8}
 .login-mode-button:focus-visible{outline:3px solid #F5C35F;outline-offset:3px}
+
+/* Accessible map navigation on desktop, tablet and touch screens */
+.map-controls{display:flex;flex-wrap:wrap;align-items:center;justify-content:center;gap:9px;margin:16px 0 6px}
+.map-controls button{font:inherit;font-weight:800;color:#293E3B;background:#FFFDF4;border:3px solid #293E3B;border-radius:2px;box-shadow:3px 3px 0 #86A79E;min-height:44px;padding:9px 13px;cursor:pointer}
+.map-controls .map-enter{background:#4F7C7A;color:white}
+.map-controls button:focus-visible{outline:3px solid #E9BD5E;outline-offset:3px}
+.map-current{font-weight:850;min-width:130px;text-align:center}
+.pixel-avatar{transition:left .3s steps(6,end),top .3s steps(6,end)}
+.pixel-world.selected{border-color:#B47828;box-shadow:0 0 0 4px #FFE29A,4px 4px 0 #496F68;z-index:3}
+@media(max-width:700px){.map-controls{gap:7px}.map-controls button{padding:8px 9px;font-size:.86rem}.map-controls .map-enter{width:100%}.map-current{min-width:95px;font-size:.85rem}}
+@media(prefers-reduced-motion:reduce){.pixel-avatar{transition:none}}
