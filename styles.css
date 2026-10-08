@@ -24,3 +24,31 @@ body.locked{overflow:hidden}.lab-app{min-height:100vh}.login-screen{position:fix
 
 /* Pixel adventure homepage */
 .adventure-section{padding:44px 0 56px;background:#E9F1E9}.adventure-heading{display:flex;justify-content:space-between;align-items:center;gap:24px;margin-bottom:25px}.adventure-heading h1{font-size:clamp(2rem,5vw,3.5rem);line-height:1.1;margin:8px 0}.adventure-heading p{max-width:62ch}.adventure-level{background:#fff;border:3px solid #25282A;box-shadow:6px 6px 0 #8CB6A9;padding:14px 20px;display:flex;flex-direction:column;white-space:nowrap}.pixel-map{height:clamp(360px,55vw,650px);position:relative;overflow:hidden;border:5px solid #304D4A;box-shadow:9px 9px 0 #A1BDB2;background:#C5DFDA;image-rendering:pixelated}.pixel-map-art{width:100%;height:100%;position:absolute;inset:0;image-rendering:pixelated}.pixel-world-layer{position:absolute;inset:0}.pixel-world{position:absolute;transform:translate(-50%,-40%);border:3px solid #293E3B;background:#F9F7EC;box-shadow:4px 4px 0 #496F68;padding:7px 10px;min-width:116px;display:flex;flex-direction:column;align-items:center;cursor:pointer;color:#25282A;font:inherit}.pixel-world:hover,.pixel-world:focus-visible{transform:translate(-50%,-44%);outline:3px solid #F7CE68;z-index:2}.pixel-world-icon{font-size:1.5rem;line-height:1.1}.pixel-world strong{font-size:.93rem}.pixel-world small{font-size:.72rem}.adventure-tip{font-size:.93rem;color:var(--muted);margin-top:18px}.coin-counter{display:flex;align-items:center;gap:6px;white-space:nowrap;background:#FFF3C8;border-radius:20px;padding:5px 10px;font-weight:800}.pixel-coin{width:18px;height:18px;background:#F6B63C;border:3px solid #B57C20;box-shadow:inset 3px 3px 0 #FFE38A;display:inline-block}.coin-counter small{font-size:.76rem}@media(max-width:700px){.adventure-heading{align-items:flex-start;flex-direction:column}.pixel-map{height:500px}.pixel-world{min-width:88px;padding:5px 3px}.pixel-world strong{font-size:.75rem}.pixel-world small{font-size:.64rem}.progress-inner{grid-template-columns:1fr auto auto}.coin-counter{grid-column:1/4;justify-self:start}.progress-track{grid-row:2;grid-column:1/4}}
+
+/* OV+ Adventure World unified pixel skin */
+:root{--pixel-ink:#293E3B;--pixel-paper:#FFFDF5;--pixel-accent:#F5CE69}
+.legacy-hero,.legacy-worlds{display:none}
+.home-missions{display:none}
+body.world-selected .home-missions{display:block}
+body.world-selected .adventure-section{display:none}
+body.world-selected .home-missions{min-height:70vh;padding:40px 0 80px}
+.pixel-back,.mission-open,.small-button,.complete-button,.sd-primary,.sd-secondary,.sd-home,.login-button,.quick-close{border-radius:2px!important;border:2px solid var(--pixel-ink)!important;box-shadow:3px 3px 0 #A6B8AD;font-family:inherit;font-weight:750;cursor:pointer}
+.pixel-back{padding:10px 14px;background:var(--pixel-paper);color:var(--pixel-ink);margin-right:10px}
+.pixel-back.hidden{display:none}
+body.world-selected .mission-toolbar{align-items:center;flex-wrap:wrap}
+body.world-selected .card{border:2px solid var(--pixel-ink);border-radius:3px;box-shadow:5px 5px 0 #B8C9C0;background:var(--pixel-paper)}
+body.world-selected .tag{letter-spacing:.09em}
+body.world-selected .quick-sheet{border:3px solid var(--pixel-ink);border-radius:3px;box-shadow:8px 8px 0 #91AFA4;background:var(--pixel-paper)}
+body.world-selected .quick-sheet .sd-step-track,body.world-selected .quick-sheet .sd-step-track>div{border-radius:0}
+body.world-selected .sd-panel{border-left:4px solid var(--petrol)}
+.pixel-world.selected{outline:4px solid #F6D470;z-index:3}
+.pixel-avatar{position:absolute;transform:translate(-50%,-100%);width:28px;height:42px;pointer-events:none;z-index:5;filter:drop-shadow(2px 3px 0 #334A44)}
+.avatar-head,.avatar-body,.avatar-feet{display:block;position:absolute;image-rendering:pixelated}
+.avatar-head{top:0;left:6px;width:16px;height:15px;background:#F6C69B;border:3px solid #283C3B;box-shadow:0 -5px 0 #644F70}
+.avatar-body{top:17px;left:3px;width:22px;height:16px;background:#F07E87;border:3px solid #283C3B}
+.avatar-feet{top:33px;left:5px;width:7px;height:8px;background:#354F75;box-shadow:12px 0 0 #354F75}
+.pixel-map:focus-visible{outline:4px solid #F4B842;outline-offset:4px}
+.login-card{border:3px solid var(--pixel-ink);border-radius:4px;box-shadow:7px 7px 0 #9BB9AE}
+.progress-strip{border-bottom:2px solid #789A8F}
+@media(max-width:700px){body.world-selected .mission-toolbar{display:flex;gap:12px}.pixel-avatar{transform:translate(-50%,-100%) scale(.85)}}
+@media(prefers-reduced-motion:reduce){html{scroll-behavior:auto!important}*,*::before,*::after{animation-duration:.01ms!important;transition-duration:.01ms!important}}
