@@ -11,8 +11,8 @@
 <div class="progress-strip"><div class="wrap progress-inner"><div><strong>Mijn voortgang</strong><span id="progress-text">0 opdrachten klaar</span></div><div class="progress-track" aria-label="Voortgang"><div id="progress-fill" class="progress-fill"></div></div><span id="progress-percent">0%</span><span class="coin-counter" aria-label="OV+ Coins"><span class="pixel-coin" aria-hidden="true"></span><strong id="coin-count">0</strong> <small>OV+ Coins</small></span></div></div>
 <header class="top"><div class="wrap nav"><a class="brand" href="index.html">MUZIEK & MEDIA <span>LAB</span></a><div class="student-nav"><span id="student-name"></span><button id="logout" class="logout" type="button">Uitloggen</button><span class="ov">OV+</span></div></div></header>
 <main>
-<section id="adventure" class="adventure-section"><div class="wrap"><div class="adventure-heading"><div><p class="kicker">OV+ ADVENTURE WORLD · TESTVERSIE</p><h1>Jouw avontuur begint hier</h1><p>Ontdek zes werelden. Kies zelf waar je naartoe gaat. Elke afgewerkte QUICK levert 50 XP en 10 OV+ Coins op.</p></div><div class="adventure-level"><strong id="adventure-level">Level 1</strong><span id="adventure-xp">0 XP</span></div></div><div class="pixel-map" id="pixel-map" aria-label="Interactieve kaart met zes werelden"></div><p class="adventure-tip">Kies een wereld op de kaart. Je kunt altijd terugkeren en een andere wereld ontdekken.</p></div></section>
-<section class="homehero"><div class="wrap hero-inner">
+<section id="adventure" class="adventure-section"><div class="wrap"><div class="adventure-heading"><div><p class="kicker">OV+ ADVENTURE WORLD · TESTVERSIE</p><h1>Jouw avontuur begint hier</h1><p>Ontdek zes werelden. Kies zelf waar je naartoe gaat. Elke afgewerkte QUICK levert 50 XP en 10 OV+ Coins op.</p></div><div class="adventure-level"><strong id="adventure-level">Level 1</strong><span id="adventure-xp">0 XP</span></div></div><div class="pixel-map" id="pixel-map" aria-label="Interactieve kaart met zes werelden"></div><p class="adventure-tip">Klik op een wereld of beweeg met de pijltjestoetsen. Druk op Enter om missies te ontdekken.</p></div></section>
+<section class="homehero legacy-hero"><div class="wrap hero-inner">
 <p class="kicker">OV+ · MUZIEK & MEDIA</p>
 <h1>MUZIEK<br><span>& MEDIA LAB</span></h1>
 <p class="hero-question">Wat wil jij vandaag maken?</p>
@@ -20,7 +20,7 @@
 <a class="discover" href="#werelden">Ontdek de werelden ↓</a>
 </div></section>
 
-<section id="werelden" class="world-section"><div class="wrap">
+<section id="werelden" class="world-section legacy-worlds"><div class="wrap">
 <div class="sectionhead world-head"><div><p class="kicker">6 WERELDEN</p><h2>Kies waar je zin in hebt</h2></div><p>Vandaag kiezen is niet voor altijd kiezen.</p></div>
 <div class="world-grid">
 <button class="world explorer" data-filter="explorer"><span class="world-icon">🎧</span><span class="world-name">Explorer</span><span class="world-copy">Luister. Onderzoek. Probeer iets nieuws.</span><span class="world-keywords">songs · tools · experiment</span><span class="world-go">Ontdek missies →</span></button>
@@ -34,7 +34,7 @@
 </div></section>
 
 <section id="missies" class="missions home-missions"><div class="wrap">
-<div class="mission-toolbar"><div><p class="kicker">MISSIES</p><h2 id="mission-title">Alle missies</h2></div><button id="show-all" class="small-button hidden">← Toon alle werelden</button></div>
+<div class="mission-toolbar"><button id="back-to-map" class="pixel-back hidden" type="button">← Wereldkaart</button><div><p class="kicker">MISSIES</p><h2 id="mission-title">Alle missies</h2></div><button id="show-all" class="small-button hidden">← Toon alle werelden</button></div>
 <p id="mission-intro" class="mission-intro">Je kunt ook meteen een opdracht kiezen.</p>
 <div class="grid">
 <article class="card" data-track="explorer"><div class="tag">EXPLORER · EXPLORE</div><h3>Waarom werkt dit nummer?</h3><p>Ontdek welke muzikale keuzes ervoor zorgen dat jij blijft luisteren.</p><div class="bottom"><span>20–30 min</span><a href="opdrachten/waarom-werkt-dit-nummer.html">Start missie →</a></div></article>
