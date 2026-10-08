@@ -116,3 +116,20 @@ body.world-selected .sd-panel{border-left:4px solid var(--petrol)}
 .pixel-world.selected{border-color:#B47828;box-shadow:0 0 0 4px #FFE29A,4px 4px 0 #496F68;z-index:3}
 @media(max-width:700px){.map-controls{gap:7px}.map-controls button{padding:8px 9px;font-size:.86rem}.map-controls .map-enter{width:100%}.map-current{min-width:95px;font-size:.85rem}}
 @media(prefers-reduced-motion:reduce){.pixel-avatar{transition:none}}
+
+/* Free-sailing pixel boat and accessible touch controls */
+.pixel-boat{position:absolute;left:35%;top:53%;width:34px;height:39px;transform:translate(-50%,-50%);pointer-events:none;z-index:6;filter:drop-shadow(2px 3px 0 #3E7481)}
+.boat-hull{position:absolute;left:1px;bottom:2px;width:32px;height:11px;background:#845C50;border:3px solid #293E3B;clip-path:polygon(0 0,100% 0,83% 100%,18% 100%)}
+.boat-mast{position:absolute;left:16px;top:1px;width:4px;height:28px;background:#293E3B}
+.boat-sail{position:absolute;left:5px;top:2px;width:11px;height:23px;background:#FFF5D8;border:2px solid #293E3B;clip-path:polygon(100% 0,100% 100%,0 100%)}
+.boat-wake{position:absolute;left:2px;bottom:-5px;width:29px;height:3px;background:#DDF3ED;opacity:.85}
+.pixel-boat.sailing-left{filter:drop-shadow(-2px 3px 0 #3E7481)}
+.sailing-controls{display:flex;justify-content:center;align-items:center;gap:20px}
+.sailing-pad{display:flex;flex-direction:column;align-items:center;gap:5px;touch-action:none}
+.sailing-pad-row{display:flex;gap:5px}
+.sailing-pad button{min-width:52px;min-height:50px;touch-action:none;user-select:none;-webkit-user-select:none}
+.sailing-actions{display:flex;flex-direction:column;gap:8px;align-items:stretch;max-width:270px}
+.sailing-actions .map-current{font-size:.9rem;min-height:2em}
+.sailing-actions .map-enter:disabled{background:#E6EAE5;color:#60736D;opacity:.85;cursor:not-allowed}
+.sailing-actions .map-reset{font-size:.85rem}
+@media(max-width:520px){.sailing-controls{gap:12px;align-items:center}.sailing-pad button{min-width:44px;min-height:46px}.sailing-actions{max-width:175px}.sailing-actions .map-enter{font-size:.83rem}}
