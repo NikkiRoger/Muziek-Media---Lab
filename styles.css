@@ -100,3 +100,8 @@ body.world-selected .sd-panel{border-left:4px solid var(--petrol)}
 .login-card .login-error:not(:empty){padding:10px;border:2px solid #B95349;background:#FDEAE2;text-align:left}
 .login-card .login-build{font-size:.7rem;text-align:center;color:#60776E;letter-spacing:.1em;margin-top:10px}
 @media(max-width:620px){.login-card{padding:0 19px 18px}.login-banner{margin:0 -19px 22px;height:115px}.login-card .login-mark{top:77px;left:17px}.login-card::before{top:121px}.banner-castle{transform:scale(.8);transform-origin:bottom center}}
+
+.login-mode{display:grid;grid-template-columns:1fr 1fr;gap:7px;margin:12px 0 18px}
+.login-mode-button{font:inherit;font-weight:800;font-size:.86rem;line-height:1.25;min-height:50px;background:#E9EFE7;color:#293E3B;border:2px solid #293E3B;border-radius:2px;padding:9px 7px;cursor:pointer}
+.login-mode-button.active{background:#4F7C7A;color:#fff;box-shadow:3px 3px 0 #9AB6A8}
+.login-mode-button:focus-visible{outline:3px solid #F5C35F;outline-offset:3px}
