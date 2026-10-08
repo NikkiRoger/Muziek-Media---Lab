@@ -43,7 +43,48 @@ rect(344,317,40,9,"#466C79");rect(351,309,27,9,"#E9D5AB");rect(365,277,4,33,"#37
 rect(700,364,18,13,"#D6A44D");rect(705,358,8,7,"#F4D889");rect(704,368,10,4,"#9A743E");
 root.appendChild(svg);
 const layer=document.createElement("div");layer.className="pixel-world-layer";root.appendChild(layer);
-let active=0;const avatar=document.createElement("div");avatar.className="pixel-avatar";avatar.setAttribute("aria-hidden","true");avatar.innerHTML="<span class=\"avatar-head\"></span><span class=\"avatar-body\"></span><span class=\"avatar-feet\"></span>";layer.appendChild(avatar);function move(i){active=(i+worlds.length)%worlds.length;const w=worlds[active];avatar.style.left=w.x+"%";avatar.style.top=(w.y-12)+"%";layer.querySelectorAll(".pixel-world").forEach((b,j)=>b.classList.toggle("selected",j===active));}worlds.forEach(w=>{const b=document.createElement("button");b.type="button";b.className="pixel-world";b.style.left=w.x+"%";b.style.top=w.y+"%";b.innerHTML='<span class="pixel-world-icon" aria-hidden="true">'+w.symbol+'</span><strong>'+w.name+'</strong><small>'+w.subtitle+'</small>';b.setAttribute("aria-label","Ga naar "+w.name);b.addEventListener("click",()=>{move(worlds.indexOf(w));document.querySelector('.world[data-filter="'+w.id+'"]')?.click()});layer.appendChild(b)});move(0);root.setAttribute("tabindex","0");root.addEventListener("keydown",e=>{if(["ArrowLeft","ArrowUp","ArrowRight","ArrowDown","Enter"," "].includes(e.key)){e.preventDefault();if(e.key==="Enter"||e.key===" "){layer.querySelectorAll(".pixel-world")[active].click()}else move(active+(e.key==="ArrowLeft"||e.key==="ArrowUp"?-1:1))}});
+let active=0;
+const avatar=document.createElement("div");avatar.className="pixel-avatar";avatar.setAttribute("aria-hidden","true");
+avatar.innerHTML='<span class="avatar-head"></span><span class="avatar-body"></span><span class="avatar-feet"></span>';
+layer.appendChild(avatar);
+const controls=document.createElement("div");controls.className="map-controls";
+controls.innerHTML='<button type="button" class="map-prev" aria-label="Vorig eiland">◀ Vorige</button><span class="map-current" aria-live="polite"></span><button type="button" class="map-next" aria-label="Volgend eiland">Volgende ▶</button><button type="button" class="map-enter">Ontdek missies ↵</button>';
+root.insertAdjacentElement("afterend",controls);
+const buttons=[];
+function move(i){
+ active=(i+worlds.length)%worlds.length;
+ const w=worlds[active];
+ avatar.style.left=w.x+"%";avatar.style.top=(w.y-12)+"%";
+ buttons.forEach((b,j)=>{b.classList.toggle("selected",j===active);b.setAttribute("aria-current",String(j===active));});
+ controls.querySelector(".map-current").textContent=w.name+" · "+(active+1)+"/"+worlds.length;
+}
+function enterWorld(i=active){
+ move(i);
+ document.querySelector('.world[data-filter="'+worlds[active].id+'"]')?.click();
+}
+worlds.forEach((w,i)=>{
+ const b=document.createElement("button");b.type="button";b.className="pixel-world";
+ b.style.left=w.x+"%";b.style.top=w.y+"%";
+ b.innerHTML='<span class="pixel-world-icon" aria-hidden="true">'+w.symbol+'</span><strong>'+w.name+'</strong><small>'+w.subtitle+'</small>';
+ b.setAttribute("aria-label","Open missies van "+w.name);
+ b.addEventListener("click",()=>enterWorld(i));layer.appendChild(b);buttons.push(b);
+});
+move(0);
+root.setAttribute("tabindex","0");root.setAttribute("aria-label","Wereldkaart. Gebruik de pijltjestoetsen om eilanden te kiezen en Enter om missies te openen.");
+controls.querySelector(".map-prev").addEventListener("click",()=>move(active-1));
+controls.querySelector(".map-next").addEventListener("click",()=>move(active+1));
+controls.querySelector(".map-enter").addEventListener("click",()=>enterWorld());
+document.addEventListener("keydown",e=>{
+ if(!["ArrowLeft","ArrowUp","ArrowRight","ArrowDown","Enter"].includes(e.key))return;
+ if(document.body.classList.contains("locked")||document.body.classList.contains("world-selected"))return;
+ const t=e.target;
+ if(t.closest?.("input,textarea,select,[contenteditable=true],button,a,[role=dialog]"))return;
+ if(!root.getClientRects().length)return;
+ e.preventDefault();
+ if(e.key==="Enter")enterWorld();
+ else move(active+(e.key==="ArrowLeft"||e.key==="ArrowUp"?-1:1));
+});
+
 function update(){const entries=Object.values(window.labAdventureProgress||{});const done=entries.filter(p=>p.status==="completed"&&/^[A-Z]-Q\d+$/.test(p.assignment_id));const xp=done.length*50,coins=done.length*10;const level=1+Math.floor(xp/250);const put=(id,v)=>{const e=document.querySelector(id);if(e)e.textContent=v};put("#coin-count",coins);put("#adventure-level","Level "+level);put("#adventure-xp",xp+" XP");}
 window.updateAdventure=update;update();
 })();
