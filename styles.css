@@ -192,3 +192,20 @@ body.world-selected .home-missions{background:linear-gradient(145deg,#E5EEE6,#F7
 .quick-sheet .sd-panel h3{font-size:1.35rem}
 @media(max-width:950px){.grid{grid-template-columns:repeat(2,minmax(0,1fr))!important}}
 @media(max-width:650px){.pixel-map{height:540px!important;border-width:6px!important}.pixel-world{min-width:83px!important;max-width:95px!important;padding:6px 3px!important}.pixel-world-icon{width:26px;height:26px;font-size:1rem!important}.pixel-world strong{font-size:.71rem!important}.pixel-world small{font-size:.6rem!important}.grid{grid-template-columns:1fr!important}.card{min-height:240px!important}.mission-toolbar{padding:17px}.pixel-boat{transform:translate(-50%,-50%) scale(1.15)!important}}
+
+/* Full game-world treatment — third pass */
+body:not(.locked) .adventure-section .wrap{width:min(1350px,calc(100% - 36px))}
+.pixel-map{height:clamp(540px,64vw,850px)!important;border-radius:0!important;border:12px solid #284E5D!important;box-shadow:0 0 0 5px #EACF95,0 0 0 11px #345D5C,14px 18px 0 #9DBEB2!important}
+.pixel-map-art{filter:saturate(1.15) contrast(1.03)}
+.pixel-world{min-width:104px!important;max-width:125px!important;transform:translate(-50%,-27%)!important;border:3px solid #233F4E!important;background:#F9E7B9!important;box-shadow:0 5px 0 #A07755,4px 9px 0 #2D6676!important}
+.pixel-world-icon{background:#FFF8D8!important;border:2px solid #42645B!important;border-radius:50%;width:34px;height:34px}
+.pixel-world.selected{background:#FFF8DC!important;box-shadow:0 0 0 5px #FFEA87,4px 8px 0 #285E68!important}
+.home-missions{background:#E0EAE2!important}
+.grid .card{background:linear-gradient(180deg,var(--mission-tint,#F1F5E9) 0 64px,#FFFCF2 64px)!important;min-height:318px!important;box-shadow:7px 9px 0 #92ACA1!important}
+.grid .card::after{content:"QUEST";position:absolute;top:14px;right:16px;font-size:.68rem;font-weight:900;letter-spacing:.2em;color:#425C59}
+.grid .card .tag{margin-top:42px;background:#FFFDF5!important}
+.grid .card h3{font-size:1.65rem!important;letter-spacing:-.04em}
+.grid .card .progress-badge{border:2px solid #A1B7A8!important;font-weight:900}
+.grid .card .bottom{margin-top:auto}
+.grid .card .mission-open,.grid .card .bottom a{font-size:.91rem!important;padding:11px 14px!important}
+@media(max-width:650px){.pixel-map{height:570px!important;border-width:6px!important}.pixel-world{min-width:77px!important;max-width:88px!important;padding:5px 2px!important}.grid .card{min-height:275px!important}}
