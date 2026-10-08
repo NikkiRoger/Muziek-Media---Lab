@@ -43,24 +43,31 @@ rect(344,317,40,9,"#466C79");rect(351,309,27,9,"#E9D5AB");rect(365,277,4,33,"#37
 rect(700,364,18,13,"#D6A44D");rect(705,358,8,7,"#F4D889");rect(704,368,10,4,"#9A743E");
 root.appendChild(svg);
 const layer=document.createElement("div");layer.className="pixel-world-layer";root.appendChild(layer);
-let active=0;
-const avatar=document.createElement("div");avatar.className="pixel-avatar";avatar.setAttribute("aria-hidden","true");
-avatar.innerHTML='<span class="avatar-head"></span><span class="avatar-body"></span><span class="avatar-feet"></span>';
-layer.appendChild(avatar);
-const controls=document.createElement("div");controls.className="map-controls";
-controls.innerHTML='<button type="button" class="map-prev" aria-label="Vorig eiland">◀ Vorige</button><span class="map-current" aria-live="polite"></span><button type="button" class="map-next" aria-label="Volgend eiland">Volgende ▶</button><button type="button" class="map-enter">Ontdek missies ↵</button>';
+// Free sailing: no timer, no score for speed, no moving hazards.
+const boat=document.createElement("div");
+boat.className="pixel-boat";boat.setAttribute("aria-hidden","true");
+boat.innerHTML='<span class="boat-sail"></span><span class="boat-mast"></span><span class="boat-hull"></span><span class="boat-wake"></span>';
+layer.appendChild(boat);
+let boatX=35,boatY=53,near=-1;
+const keys=new Set();let lastFrame=0;
+const controls=document.createElement("div");controls.className="map-controls sailing-controls";
+controls.innerHTML='<div class="sailing-pad" aria-label="Bestuur het bootje"><button type="button" data-sail="ArrowUp" aria-label="Vaar omhoog">▲</button><div class="sailing-pad-row"><button type="button" data-sail="ArrowLeft" aria-label="Vaar naar links">◀</button><button type="button" data-sail="ArrowDown" aria-label="Vaar omlaag">▼</button><button type="button" data-sail="ArrowRight" aria-label="Vaar naar rechts">▶</button></div></div><div class="sailing-actions"><span class="map-current" role="status" aria-live="polite">Vaar naar een eiland</span><button type="button" class="map-enter" disabled>Vaar dichterbij om aan te meren</button><button type="button" class="map-reset">Terug naar start</button></div>';
 root.insertAdjacentElement("afterend",controls);
+const status=controls.querySelector(".map-current"),dock=controls.querySelector(".map-enter");
 const buttons=[];
-function move(i){
- active=(i+worlds.length)%worlds.length;
- const w=worlds[active];
- avatar.style.left=w.x+"%";avatar.style.top=(w.y-12)+"%";
- buttons.forEach((b,j)=>{b.classList.toggle("selected",j===active);b.setAttribute("aria-current",String(j===active));});
- controls.querySelector(".map-current").textContent=w.name+" · "+(active+1)+"/"+worlds.length;
+function renderBoat(){
+ boat.style.left=boatX+"%";boat.style.top=boatY+"%";
+ let best=-1,dist=Infinity;
+ worlds.forEach((w,i)=>{const dx=(boatX-w.x)*10,dy=(boatY-w.y)*6;const d=Math.hypot(dx,dy);if(d<dist){dist=d;best=i;}});
+ near=dist<=115?best:-1;
+ buttons.forEach((b,i)=>b.classList.toggle("selected",i===near));
+ const message=near<0?"Vaar naar een eiland":("Bij "+worlds[near].name+" · klaar om aan te meren");
+ if(status.textContent!==message)status.textContent=message;
+ dock.disabled=near<0;dock.textContent=near<0?"Vaar dichterbij om aan te meren":"Aanmeren bij "+worlds[near].name+" ↵";
 }
-function enterWorld(i=active){
- move(i);
- document.querySelector('.world[data-filter="'+worlds[active].id+'"]')?.click();
+function enterWorld(i=near){
+ if(i<0)return;
+ document.querySelector('.world[data-filter="'+worlds[i].id+'"]')?.click();
 }
 worlds.forEach((w,i)=>{
  const b=document.createElement("button");b.type="button";b.className="pixel-world";
@@ -69,21 +76,43 @@ worlds.forEach((w,i)=>{
  b.setAttribute("aria-label","Open missies van "+w.name);
  b.addEventListener("click",()=>enterWorld(i));layer.appendChild(b);buttons.push(b);
 });
-move(0);
-root.setAttribute("tabindex","0");root.setAttribute("aria-label","Wereldkaart. Gebruik de pijltjestoetsen om eilanden te kiezen en Enter om missies te openen.");
-controls.querySelector(".map-prev").addEventListener("click",()=>move(active-1));
-controls.querySelector(".map-next").addEventListener("click",()=>move(active+1));
-controls.querySelector(".map-enter").addEventListener("click",()=>enterWorld());
+function sail(dx,dy){
+ const speed=1.25;const norm=Math.hypot(dx,dy)||1;
+ boatX=Math.max(3,Math.min(97,boatX+dx/norm*speed));
+ boatY=Math.max(5,Math.min(95,boatY+dy/norm*speed));
+ boat.classList.toggle("sailing-left",dx<0);
+ renderBoat();
+}
+function sailingAllowed(){return !document.body.classList.contains("locked")&&!document.body.classList.contains("world-selected")&&!!root.getClientRects().length;}
+function tick(timestamp){
+ const elapsed=lastFrame?Math.min(timestamp-lastFrame,64):16;lastFrame=timestamp;
+ if(sailingAllowed()&&keys.size){
+ const dx=Number(keys.has("ArrowRight"))-Number(keys.has("ArrowLeft"));
+ const dy=Number(keys.has("ArrowDown"))-Number(keys.has("ArrowUp"));
+ if(dx||dy)sail(dx*elapsed/45,dy*elapsed/45);
+ }
+ requestAnimationFrame(tick);
+}
+root.setAttribute("tabindex","0");
+root.setAttribute("aria-label","Zee met zes eilanden. Vaar met pijltjestoetsen en druk op Enter als je bij een eiland bent.");
 document.addEventListener("keydown",e=>{
- if(!["ArrowLeft","ArrowUp","ArrowRight","ArrowDown","Enter"].includes(e.key))return;
- if(document.body.classList.contains("locked")||document.body.classList.contains("world-selected"))return;
- const t=e.target;
- if(t.closest?.("input,textarea,select,[contenteditable=true],button,a,[role=dialog]"))return;
- if(!root.getClientRects().length)return;
- e.preventDefault();
- if(e.key==="Enter")enterWorld();
- else move(active+(e.key==="ArrowLeft"||e.key==="ArrowUp"?-1:1));
+ if(!sailingAllowed())return;
+ if(e.target.closest?.("input,textarea,select,[contenteditable=true],button,a,[role=dialog]"))return;
+ if(["ArrowLeft","ArrowRight","ArrowUp","ArrowDown"].includes(e.key)){e.preventDefault();keys.add(e.key);}
+ if(e.key==="Enter"&&near>=0){e.preventDefault();enterWorld();}
 });
+document.addEventListener("keyup",e=>keys.delete(e.key));
+window.addEventListener("blur",()=>keys.clear());
+document.addEventListener("visibilitychange",()=>{if(document.hidden)keys.clear();});
+controls.querySelectorAll("[data-sail]").forEach(b=>{
+ const key=b.dataset.sail;
+ b.addEventListener("pointerdown",e=>{if(!sailingAllowed())return;e.preventDefault();keys.add(key);b.setPointerCapture?.(e.pointerId);});
+ for(const event of ["pointerup","pointercancel","lostpointercapture"])b.addEventListener(event,()=>keys.delete(key));
+ b.addEventListener("click",()=>{if(sailingAllowed())sail(key==="ArrowRight"?1:key==="ArrowLeft"?-1:0,key==="ArrowDown"?1:key==="ArrowUp"?-1:0);});
+});
+dock.addEventListener("click",()=>enterWorld());
+controls.querySelector(".map-reset").addEventListener("click",()=>{boatX=35;boatY=53;keys.clear();renderBoat();});
+renderBoat();requestAnimationFrame(tick);
 
 function update(){const entries=Object.values(window.labAdventureProgress||{});const done=entries.filter(p=>p.status==="completed"&&/^[A-Z]-Q\d+$/.test(p.assignment_id));const xp=done.length*50,coins=done.length*10;const level=1+Math.floor(xp/250);const put=(id,v)=>{const e=document.querySelector(id);if(e)e.textContent=v};put("#coin-count",coins);put("#adventure-level","Level "+level);put("#adventure-xp",xp+" XP");}
 window.updateAdventure=update;update();
