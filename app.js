@@ -65,8 +65,57 @@ modal.querySelector("#ex-next").onclick=async()=>{const missing=spec.steps[step-
 modal.addEventListener("input",schedule);modal.addEventListener("click",e=>{if(e.target===modal)close()});refresh();
 }
 
-function showQuick(id){const m=(window.quickMissions||[]).find(x=>x.id===id);if(!m)return;
-if(id==="E-Q01"){showSongDetective(m);return;}if(explorerPrompts[id]){showExplorerMission(m);return;}const old=document.querySelector("#quick-modal");if(old)old.remove();const modal=document.createElement("div");modal.id="quick-modal";modal.className="quick-overlay";modal.innerHTML=`<section class="quick-sheet" role="dialog" aria-modal="true" aria-label="${m.title}"><button class="quick-close" aria-label="Sluiten">×</button><p class="kicker">${m.trackLabel} · QUICK · ${m.duration}</p><h2>${m.title}</h2><div class="quick-mission"><strong>MISSIE</strong><p>${m.mission}</p></div><h3>DOE</h3><ol class="quick-steps">${m.steps.map(s=>`<li>${s}</li>`).join("")}</ol><div class="quick-two"><div class="quick-done"><strong>✓ KLAAR?</strong><p>${m.done}</p></div><div class="quick-extra"><strong>★ EXTRA</strong><p>${m.extra}</p></div></div><div class="quick-tools"><strong>NODIG</strong> · ${m.tools}</div><button class="complete-button" data-complete="${m.id}">✓ Ik ben klaar</button></section>`;document.body.appendChild(modal);modal.querySelector(".quick-close").focus();modal.querySelector(".quick-close").onclick=()=>modal.remove();modal.onclick=e=>{if(e.target===modal)modal.remove()};}
+function showQuick(id){
+ const m=(window.quickMissions||[]).find(x=>x.id===id);if(!m)return;
+ if(id==="E-Q01"){showSongDetective(m);return;}
+ if(explorerPrompts[id]){showExplorerMission(m);return;}
+ showStepMission(m);
+}
+function showStepMission(m){
+ document.querySelector("#quick-modal")?.remove();
+ const old=labProgress[m.id]||{},saved=old.answers||{};
+ let step=Math.max(1,Math.min(m.steps.length,Number(old.current_step)||1));
+ let saving=Promise.resolve(),timer=null,dirty=false;
+ const modal=document.createElement("div");modal.id="quick-modal";modal.className="quick-overlay";
+ modal.innerHTML=`<section class="quick-sheet interactive-sheet" role="dialog" aria-modal="true" aria-labelledby="mission-dialog-title">
+ <div class="sd-top"><button type="button" class="sd-home" id="mission-exit">← Terug naar missies</button><span>Stap <strong id="mission-step-num">${step}</strong> van ${m.steps.length}</span></div>
+ <div class="sd-step-track"><div id="mission-step-fill"></div></div>
+ <p class="kicker">${esc(m.trackLabel)} · QUICK · ${esc(m.duration)}</p>
+ <h2 id="mission-dialog-title">${esc(m.title)}</h2>
+ <p class="sd-intro">${esc(m.mission)}</p>
+ <p class="sd-save" id="mission-save-status" role="status" aria-live="polite">Je kunt je voortgang bewaren.</p>
+ ${m.steps.map((instruction,i)=>`<section class="sd-panel ${i===step-1?"":"hidden"}" data-mission-step="${i+1}">
+ <span class="step-label">STAP ${i+1} VAN ${m.steps.length}</span>
+ <h3>${esc(instruction)}</h3>
+ <label class="mission-check"><input type="checkbox" data-check="${i}" ${saved["check"+i]?"checked":""}> Deze stap heb ik uitgevoerd.</label>
+ <label class="sd-field">Mijn notitie (mag leeg blijven)<textarea rows="3" data-note="${i}" placeholder="Wat heb je gemaakt of ontdekt?">${esc(saved["note"+i]||"")}</textarea></label>
+ </section>`).join("")}
+ <p class="quick-tools"><strong>NODIG</strong> · ${esc(m.tools)}</p>
+ <div class="sd-actions" id="mission-actions"><button type="button" class="sd-secondary" id="mission-back">← Vorige stap</button><button type="button" class="sd-primary" id="mission-next">Volgende stap →</button></div>
+ <section class="sd-finish hidden" id="mission-finish"><h3>✓ Missie afgerond!</h3><p>${esc(m.done)}</p><p>+50 XP · +10 OV+ Coins</p><details class="sd-extra"><summary>★ Extra uitdaging (vrijblijvend)</summary><p>${esc(m.extra)}</p></details><button type="button" class="sd-home" id="mission-finish-exit">← Terug naar missies</button></section>
+ </section>`;
+ document.body.appendChild(modal);
+ const status=modal.querySelector("#mission-save-status");
+ const collect=()=>{const result={};modal.querySelectorAll("[data-check]").forEach(x=>result["check"+x.dataset.check]=x.checked);modal.querySelectorAll("[data-note]").forEach(x=>result["note"+x.dataset.note]=x.value.trim());return result;};
+ const persist=(complete=false)=>{clearTimeout(timer);dirty=false;const answers=collect();status.textContent="Bewaren…";saving=saving.catch(()=>{}).then(async()=>{const ok=await saveProgress(m.id,complete||old.status==="completed"?"completed":"started",answers,step);status.textContent=ok?"✓ Voortgang opgeslagen":"Bewaren mislukt. Probeer opnieuw.";return ok});return saving;};
+ const schedule=()=>{dirty=true;clearTimeout(timer);status.textContent="Wijzigingen worden bewaard…";timer=setTimeout(()=>persist(),850);};
+ const refresh=()=>{modal.querySelectorAll("[data-mission-step]").forEach(x=>x.classList.toggle("hidden",Number(x.dataset.missionStep)!==step));modal.querySelector("#mission-step-num").textContent=step;modal.querySelector("#mission-step-fill").style.width=Math.round(step/m.steps.length*100)+"%";modal.querySelector("#mission-back").disabled=step===1;modal.querySelector("#mission-next").textContent=step===m.steps.length?"✓ Missie afronden":"Volgende stap →";};
+ const close=async()=>{if(dirty)await persist();else await saving;modal.remove();document.querySelector("#missies").scrollIntoView({block:"start",behavior:"smooth"});};
+ modal.querySelector("#mission-exit").onclick=close;modal.querySelector("#mission-finish-exit").onclick=close;
+ modal.querySelector("#mission-back").onclick=async()=>{if(dirty&&await persist()===false)return;step=Math.max(1,step-1);refresh();};
+ modal.querySelector("#mission-next").onclick=async()=>{
+ const checked=modal.querySelector('[data-check="'+(step-1)+'"]');
+ if(!checked.checked){status.textContent="Vink eerst aan dat je deze stap hebt uitgevoerd.";checked.focus();return;}
+ const final=step===m.steps.length;
+ if(await persist(final)===false)return;
+ if(final){modal.querySelectorAll("[data-mission-step],#mission-actions").forEach(x=>x.classList.add("hidden"));modal.querySelector("#mission-finish").classList.remove("hidden");}
+ else{step++;refresh();}
+ modal.querySelector(".quick-sheet").scrollIntoView({block:"start"});
+ };
+ modal.addEventListener("input",schedule);modal.addEventListener("change",schedule);
+ modal.addEventListener("click",e=>{if(e.target===modal)close();});
+ refresh();modal.querySelector("#mission-exit").focus();
+}
 
 function esc(v=""){return String(v).replace(/[&<>"']/g,ch=>({"&":"&amp;","<":"&lt;",">":"&gt;","\"":"&quot;","'":"&#39;"}[ch]))}
 function showSongDetective(m){
