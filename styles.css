@@ -141,3 +141,54 @@ body.world-selected .sd-panel{border-left:4px solid var(--petrol)}
 .interactive-sheet .sd-panel h3{line-height:1.4}
 .interactive-sheet [data-note]{width:100%;min-height:82px;resize:vertical}
 .interactive-sheet button:disabled{opacity:.5;cursor:not-allowed}
+
+/* Adventure World — visual redesign v2; login styling intentionally untouched */
+body:not(.locked) .adventure-section{padding:34px 0 55px;background:linear-gradient(180deg,#DCECE6 0%,#F7F6F2 100%);position:relative}
+.adventure-heading{margin:0 0 26px;gap:20px}
+.adventure-heading h1{font-size:clamp(2.2rem,5vw,4.5rem);line-height:1.02;letter-spacing:-.055em;text-wrap:balance;text-shadow:3px 3px 0 #C5DDD2}
+.adventure-heading .kicker{letter-spacing:.16em;color:#3B706D}
+.adventure-heading p:not(.kicker){max-width:55ch;font-size:1.04rem}
+.adventure-level{border:3px solid #284E52!important;background:#FFF7D8!important;box-shadow:5px 5px 0 #8CAEA2!important;border-radius:3px!important;padding:14px 18px!important}
+.pixel-map{height:clamp(440px,60vw,710px)!important;border:9px solid #274F5C!important;border-radius:12px!important;box-shadow:0 0 0 5px #E3C88D,0 0 0 10px #385F60,12px 16px 0 #A5BEB1!important;background:#347F9C!important}
+.pixel-map::after{content:"OV+  /  ARCHIPEL 01";position:absolute;top:10px;left:12px;z-index:8;pointer-events:none;background:#F7E6B7;color:#35545A;border:2px solid #375C62;padding:4px 9px;font-weight:900;font-size:.66rem;letter-spacing:.13em;box-shadow:3px 3px 0 #2B7185}
+.pixel-world{min-width:112px!important;max-width:140px!important;padding:9px 10px!important;background:#FFFAE9!important;border:3px solid #314F55!important;border-radius:4px!important;box-shadow:4px 5px 0 #2D6D78!important;transform:translate(-50%,-36%)!important;transition:box-shadow .16s ease,background .16s ease}
+.pixel-world:hover,.pixel-world:focus-visible{background:#FFF1C6!important;box-shadow:0 0 0 4px #FFF1B2,5px 6px 0 #275C69!important;outline:none!important}
+.pixel-world.selected{background:#FFF2B8!important;box-shadow:0 0 0 5px #FFE68A,5px 6px 0 #275C69!important}
+.pixel-world-icon{display:grid;place-items:center;width:38px;height:38px;background:#DCEDE5;border:2px solid #315C5C;margin:0 auto 4px;font-size:1.3rem!important}
+.pixel-world strong{font-size:.92rem!important;line-height:1.2}
+.pixel-world small{font-size:.72rem!important;line-height:1.25;color:#566C68}
+.pixel-boat{transform:translate(-50%,-50%) scale(1.5)!important;filter:drop-shadow(3px 4px 0 #1C627D)!important}
+.sailing-controls{padding:20px 12px;margin:18px 0 0;background:#E4EEE7;border:3px solid #466F6A;border-radius:5px;box-shadow:5px 5px 0 #B4C7B8}
+.sailing-pad button{background:#FFFAE9!important}
+.sailing-pad button:active{background:#F8D990!important;transform:translateY(2px)}
+.adventure-tip{margin-top:15px;font-weight:650;color:#496B65}
+body.world-selected .home-missions{background:linear-gradient(145deg,#E5EEE6,#F7F3E7);padding-top:44px!important}
+.mission-toolbar{background:#F9F7EC;border:3px solid #355C59;box-shadow:6px 6px 0 #AEC6B8;padding:22px 24px;align-items:center;margin-bottom:24px}
+.mission-toolbar h2{margin:0;font-size:clamp(1.8rem,3.7vw,3rem);letter-spacing:-.04em}
+.mission-toolbar .kicker{margin-bottom:6px}
+.mission-intro{margin:0 0 25px!important;font-weight:650}
+.grid{grid-template-columns:repeat(3,minmax(0,1fr))!important;gap:19px!important}
+.card{position:relative;isolation:isolate;min-height:300px!important;border:3px solid #344F51!important;border-radius:5px!important;padding:24px 20px 18px!important;background:#FFFDF4!important;box-shadow:6px 7px 0 #B5C7BA!important;transition:transform .15s ease,box-shadow .15s ease!important;overflow:hidden}
+.card::before{content:"";height:8px;position:absolute;top:0;left:0;right:0;background:var(--mission-accent,#78B3A4)}
+.card[data-track="explorer"]{--mission-accent:#67A6C2;--mission-tint:#E4F2F5}
+.card[data-track="musician"]{--mission-accent:#80B87B;--mission-tint:#EAF5E2}
+.card[data-track="producer"]{--mission-accent:#A887C7;--mission-tint:#F0E9F8}
+.card[data-track="designer"]{--mission-accent:#E6A079;--mission-tint:#F9ECE2}
+.card[data-track="media"]{--mission-accent:#7F9ED0;--mission-tint:#E8EFFA}
+.card[data-track="coder"]{--mission-accent:#D1B560;--mission-tint:#FAF3D9}
+.card:hover,.card:focus-within{transform:translateY(-4px)!important;box-shadow:8px 11px 0 #91B0A3!important}
+.card .tag{display:inline-flex;align-self:flex-start;margin:5px 0 14px;padding:5px 8px;border:2px solid #425D5B;background:var(--mission-tint,#EDF3ED);color:#354D4C;font-size:.68rem;letter-spacing:.1em}
+.card h3{font-size:clamp(1.3rem,2vw,1.6rem);line-height:1.12;margin:0 0 12px;letter-spacing:-.025em}
+.card>p{color:#4C6260;font-size:.95rem;line-height:1.45}
+.card .progress-badge{margin:12px 0 15px;border-radius:3px;border:1px solid #9BB4A9;background:#F0F4EA;padding:5px 9px}
+.card.is-started{background:#FFFBEC!important}
+.card.is-complete{background:#F0F7E9!important}
+.card .bottom{border-top:2px dashed #CAD8CF;padding-top:16px;gap:8px;flex-wrap:wrap}
+.card .bottom a,.card .mission-open{display:inline-block;text-decoration:none!important;text-align:center;background:#416F6A!important;color:white!important;border:2px solid #2E5553!important;border-radius:3px;padding:10px 12px;font-size:.85rem;box-shadow:3px 3px 0 #B1C9B8;min-height:44px}
+.card .bottom a:hover,.card .mission-open:hover{background:#2C5956!important}
+.quick-sheet.interactive-sheet{border:5px solid #355F5B;border-radius:6px;box-shadow:10px 12px 0 #8FA99C;background:#FFFCF2}
+.quick-sheet .sd-step-track{border:2px solid #385C59}
+.quick-sheet .sd-panel{background:#F5F6EF;border:2px solid #D6E1D7;padding:18px;margin:14px 0}
+.quick-sheet .sd-panel h3{font-size:1.35rem}
+@media(max-width:950px){.grid{grid-template-columns:repeat(2,minmax(0,1fr))!important}}
+@media(max-width:650px){.pixel-map{height:540px!important;border-width:6px!important}.pixel-world{min-width:83px!important;max-width:95px!important;padding:6px 3px!important}.pixel-world-icon{width:26px;height:26px;font-size:1rem!important}.pixel-world strong{font-size:.71rem!important}.pixel-world small{font-size:.6rem!important}.grid{grid-template-columns:1fr!important}.card{min-height:240px!important}.mission-toolbar{padding:17px}.pixel-boat{transform:translate(-50%,-50%) scale(1.15)!important}}
