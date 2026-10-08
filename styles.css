@@ -133,3 +133,11 @@ body.world-selected .sd-panel{border-left:4px solid var(--petrol)}
 .sailing-actions .map-enter:disabled{background:#E6EAE5;color:#60736D;opacity:.85;cursor:not-allowed}
 .sailing-actions .map-reset{font-size:.85rem}
 @media(max-width:520px){.sailing-controls{gap:12px;align-items:center}.sailing-pad button{min-width:44px;min-height:46px}.sailing-actions{max-width:175px}.sailing-actions .map-enter{font-size:.83rem}}
+
+/* Mission wizard: one action at a time, optional reflection, visible save state */
+.mission-check{display:flex;align-items:center;gap:12px;padding:14px;margin:18px 0;background:#EAF1E9;border:2px solid #A5BEB3;font-weight:800;cursor:pointer}
+.mission-check input{width:22px;height:22px;flex-shrink:0;accent-color:#4F7C7A}
+.interactive-sheet .sd-panel{padding-bottom:12px}
+.interactive-sheet .sd-panel h3{line-height:1.4}
+.interactive-sheet [data-note]{width:100%;min-height:82px;resize:vertical}
+.interactive-sheet button:disabled{opacity:.5;cursor:not-allowed}
