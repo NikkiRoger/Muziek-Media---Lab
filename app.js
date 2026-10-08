@@ -19,7 +19,7 @@ function setLoginMode(register){
  document.querySelector("#mode-register").setAttribute("aria-pressed",String(register));
  document.querySelector("#login-intro").textContent=register?"Kies een unieke gebruikersnaam en een toegangscode. Zo kun je later verder spelen.":"Heb je al een account? Log in en speel verder.";
  document.querySelector("#login-help").textContent=register?"Gebruik bijvoorbeeld je voornaam met een cijfer. Onthoud je toegangscode.":"Nieuw op school? Kies hierboven ‘Nieuw account’.";
- document.querySelector("#login-name").placeholder=register?"bv. Mona7":"Je gebruikersnaam";
+ document.querySelector("#login-name").placeholder=register?"bv. Sam7":"Je gebruikersnaam";
  document.querySelector("#login-code").autocomplete=register?"new-password":"current-password";
  loginSubmit.textContent=register?"Maak mijn account →":"Start mijn avontuur →";
  document.querySelector("#login-error").textContent="";
