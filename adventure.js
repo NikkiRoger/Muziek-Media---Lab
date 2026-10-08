@@ -19,19 +19,31 @@ for(let y=0;y<600;y+=24)for(let x=0;x<1000;x+=32){
 }
 const positions=worlds.map(w=>({x:w.x*10,y:w.y*6}));
 function island(cx,cy,land,kind){
- const tiles=[[ -76,-28,152,70],[-63,-45,126,108],[-45,-59,90,136],[-90,-10,180,42]];
- for(const [dx,dy,w,h] of tiles)rect(cx+dx+4,cy+dy+10,w,h,"#438F9B");
- for(const [dx,dy,w,h] of tiles)rect(cx+dx,cy+dy+4,w,h,"#F3DEAC");
- for(const [dx,dy,w,h] of [[-68,-23,136,63],[-56,-37,112,90],[-36,-49,72,112],[-80,-3,160,29]])rect(cx+dx,cy+dy,w,h,land);
- // Pixelated shoreline, grasses and stones
- for(let j=0;j<7;j++){let px=cx-58+j*18;rect(px,cy+34+(j%2)*7,9,5,"#4E997A");}
- if(kind==="forest"){for(const [dx,dy] of [[-39,-20],[-8,-32],[27,-11]]){rect(cx+dx-5,cy+dy+14,10,23,"#725E4E");rect(cx+dx-19,cy+dy-7,38,27,"#397E67");rect(cx+dx-12,cy+dy-19,24,16,"#4F9B76");}}
- if(kind==="factory"){rect(cx-35,cy-25,76,55,"#9A8AA6");rect(cx-39,cy-30,80,11,"#D6B9C6");rect(cx+20,cy-53,13,32,"#675F7D");rect(cx-22,cy-9,16,18,"#F7D58D");rect(cx+4,cy-9,16,18,"#F7D58D");}
- if(kind==="city"){for(const [dx,dy,h] of [[-42,-14,41],[-11,-32,59],[23,-7,35]]){rect(cx+dx,cy+dy,27,h,"#D98183");rect(cx+dx+6,cy+dy+9,9,10,"#FFF0C7");}}
- if(kind==="studio"){rect(cx-43,cy-21,84,54,"#677EA4");rect(cx-48,cy-29,94,13,"#A8BCE0");rect(cx-19,cy-9,35,26,"#F2E4C8");rect(cx-8,cy-3,15,15,"#D98083");rect(cx+39,cy-8,13,29,"#5A738B");}
- if(kind==="arcade"){rect(cx-36,cy-35,72,65,"#725F99");rect(cx-29,cy-28,58,17,"#E9C16D");rect(cx-22,cy-5,44,25,"#2B5666");rect(cx-11,cy+3,21,8,"#9FD9CD");}
- if(kind==="island"){rect(cx-36,cy-21,72,49,"#F0E1BD");rect(cx-40,cy-27,80,11,"#E7A57B");rect(cx-25,cy-9,17,19,"#88B8B5");rect(cx+7,cy-9,17,19,"#88B8B5");rect(cx-3,cy+7,12,21,"#806F67");}
+ const r=(x,y,w,h,c)=>rect(cx+x,cy+y,w,h,c);
+ // Layered, irregular, tile-built coastlines with strong elevation and shadows.
+ const outline=[[-90,-20,180,69],[-76,-47,151,122],[-52,-62,107,146],[-103,0,206,37]];
+ outline.forEach(([x,y,w,h])=>r(x+6,y+15,w,h,"#286E80"));
+ outline.forEach(([x,y,w,h])=>r(x+2,y+7,w,h,"#E8C78D"));
+ outline.forEach(([x,y,w,h])=>r(x,y,w,h,"#F6DDA5"));
+ const grass=[[-79,-20,158,65],[-64,-38,127,105],[-43,-52,88,131],[-91,1,182,28]];
+ grass.forEach(([x,y,w,h])=>r(x,y,w,h,land));
+ r(-60,42,122,6,"#428C7B");r(-37,50,75,5,"#37877E");
+ // Terrain pixels, grass tufts, boulders, flowers and pathways.
+ for(let i=0;i<20;i++){const x=-70+(i*29)%139,y=-34+(i*37)%78;r(x,y,7,4,i%4===0?"#E9E5B2":"#4C967C");}
+ for(let i=0;i<5;i++){const x=-57+i*27;r(x,27+(i%2)*6,11,5,"#F8E7BC");}
+ const tree=(x,y)=>{r(x-3,y+9,9,26,"#735747");r(x-21,y-5,43,22,"#2F745F");r(x-14,y-19,30,21,"#388D6A");r(x-7,y-27,18,13,"#62AC7C");r(x+9,y-10,6,6,"#B4D8A0");};
+ const roof=(x,y,w,c)=>{r(x-5,y-9,w+10,11,"#344D5D");r(x-1,y-15,w+2,9,c);r(x+4,y-22,w-8,8,c);};
+ const window=(x,y)=>{r(x,y,11,13,"#314F5E");r(x+3,y+3,5,7,"#F8DE8E");};
+ if(kind==="island"){tree(-62,-33);tree(62,-20);r(-34,-15,68,54,"#FFF1D2");r(-37,-19,74,8,"#AF7D64");roof(-34,-19,68,"#C66D66");window(-23,0);window(12,0);r(-5,14,16,25,"#8C6856");r(-3,19,5,6,"#F4D88B");r(-7,38,22,18,"#D9BE92");}
+ if(kind==="forest"){tree(-52,-27);tree(43,-32);tree(5,-48);tree(-24,30);r(-23,-3,50,37,"#D6A66E");roof(-23,-3,50,"#8C5D69");window(-12,10);r(9,14,12,20,"#644C4A");r(1,34,14,17,"#F5D6A3");}
+ if(kind==="factory"){r(-50,-20,100,66,"#8B809D");r(-55,-27,110,12,"#D7B7C7");r(-33,-58,18,36,"#635F7D");r(21,-75,16,55,"#665A7A");r(-37,-62,26,7,"#B9A8C2");r(19,-79,20,8,"#B9A8C2");r(-33,-72,24,7,"#E5D9E3");r(22,-89,25,7,"#E5D9E3");for(let i=0;i<3;i++)window(-37+i*29,-5);r(-9,19,24,27,"#514D65");r(-2,25,9,11,"#F2D9AA");}
+ if(kind==="city"){r(-59,-10,35,55,"#E9A17C");r(-19,-37,43,82,"#E2C7A2");r(30,-19,31,64,"#B57E99");roof(-59,-10,35,"#B6656E");roof(-19,-37,43,"#C96B78");roof(30,-19,31,"#835C8F");for(const x of [-50,-8,39]){window(x,1);window(x,23);}r(-10,-22,17,14,"#F9E6A2");r(-7,32,13,13,"#765D63");}
+ if(kind==="studio"){r(-53,-20,108,66,"#6687B2");roof(-53,-20,108,"#3F617F");r(-30,-3,62,40,"#293F63");r(-24,3,50,28,"#E8C6B1");r(-17,7,35,19,"#B65F76");r(-4,8,12,16,"#F6E7C4");r(39,-4,11,39,"#334B6A");r(42,-19,5,16,"#F3C977");tree(-72,-17);}
+ if(kind==="arcade"){r(-48,-29,96,77,"#765C9B");roof(-48,-29,96,"#D6A84F");r(-37,-12,74,48,"#2F4D70");r(-31,-6,62,32,"#77A5B4");r(-26,-1,52,22,"#E4A9B4");r(-17,6,34,10,"#FBE3A7");r(-8,34,19,14,"#3D375D");r(-43,-35,15,10,"#F4D17B");r(31,-35,15,10,"#F4D17B");}
+ // Tiny docks show exactly where the player can sail.
+ r(-10,58,20,17,"#8E6D52");r(-17,64,34,6,"#D3B384");r(-10,76,5,13,"#7A5D4B");r(6,76,5,13,"#7A5D4B");
 }
+
 worlds.forEach(w=>island(w.x*10,w.y*6,w.color,w.shape));
 // Dotted sea routes connect the six islands without competing with labels.
 for(const [a,b] of [[0,1],[1,2],[0,3],[1,4],[2,5],[3,4],[4,5]]){
