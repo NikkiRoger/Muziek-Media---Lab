@@ -78,3 +78,25 @@ body.world-selected .sd-panel{border-left:4px solid var(--petrol)}
 .login-card .login-help{font-size:.84rem;margin-top:16px}
 @media(max-width:620px){.login-screen{padding:22px 16px}.login-card{padding:30px 20px 22px;box-shadow:6px 6px 0 #638E81}.login-card::before{font-size:.58rem}.login-card h1{font-size:clamp(2rem,10vw,3rem)}.login-cloud{opacity:.45}}
 @media(prefers-reduced-motion:reduce){.login-scenery *{animation:none!important}}
+
+/* Login screen v4: deliberate pixel-art scene and visible connection feedback */
+.login-screen{background:#A6CEC4}
+.login-card{width:min(540px,100%);padding:0 34px 24px;border:5px solid #283F3B;background:#FCF9EA;box-shadow:10px 10px 0 #517E71,16px 16px 0 #2D514A}
+.login-banner{height:138px;position:relative;margin:0 -34px 23px;overflow:hidden;background:linear-gradient(#86BFC7 0 65%,#7AAE87 65%);border-bottom:5px solid #283F3B}
+.banner-sun{position:absolute;width:38px;height:38px;right:65px;top:18px;background:#F6D77A;box-shadow:0 0 0 7px #F6E8A0}
+.banner-mountain{position:absolute;bottom:0;left:0;width:100%;height:72px;background:#A7C5A5;clip-path:polygon(0 65%,13% 65%,13% 35%,26% 35%,26% 55%,41% 55%,41% 15%,54% 15%,54% 50%,72% 50%,72% 35%,86% 35%,86% 65%,100% 65%,100% 100%,0 100%)}
+.banner-castle{position:absolute;bottom:12px;left:44%;width:88px;height:64px;background:#D8A59A;border:5px solid #283F3B;box-shadow:inset 0 8px 0 #E9C0A8}
+.banner-castle::before{content:"";position:absolute;top:-20px;left:-16px;width:28px;height:22px;background:#E4B5A3;border:4px solid #283F3B;box-shadow:66px 0 0 -1px #E4B5A3,66px 0 0 3px #283F3B}
+.banner-castle i:first-child{position:absolute;bottom:0;left:29px;width:22px;height:34px;background:#354F50}
+.banner-castle i:nth-child(2),.banner-castle i:nth-child(3){position:absolute;top:10px;width:11px;height:11px;background:#F9E7A4;border:2px solid #283F3B}.banner-castle i:nth-child(2){left:7px}.banner-castle i:nth-child(3){right:7px}
+.banner-path{position:absolute;bottom:0;left:48%;width:50px;height:13px;background:#F4E4B6}
+.login-card .login-mark{position:absolute;top:97px;left:27px;transform:scale(.68);transform-origin:top left;z-index:1}
+.login-card::before{top:147px;right:17px}
+.login-card .kicker{margin-top:2px}
+.login-card h1{font-size:clamp(2.3rem,7vw,3.65rem);line-height:1.04}
+.login-card .login-lead{margin-bottom:18px}
+.login-card input{min-height:49px}
+.login-card .login-button:disabled{opacity:.75;cursor:wait}
+.login-card .login-error:not(:empty){padding:10px;border:2px solid #B95349;background:#FDEAE2;text-align:left}
+.login-card .login-build{font-size:.7rem;text-align:center;color:#60776E;letter-spacing:.1em;margin-top:10px}
+@media(max-width:620px){.login-card{padding:0 19px 18px}.login-banner{margin:0 -19px 22px;height:115px}.login-card .login-mark{top:77px;left:17px}.login-card::before{top:121px}.banner-castle{transform:scale(.8);transform-origin:bottom center}}
